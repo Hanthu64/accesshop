@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Enums\Category;
+use App\Models\Shop;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -25,10 +27,12 @@ class UserFactory extends Factory
     {
         return [
             'name' => $this -> faker -> name,
+            'image' => 'images/usericon.png',
+            'favourite_categories' => $this -> faker -> randomElements(Category::cases(), rand(1, 4)),
             'email' => $this -> faker -> unique()->safeEmail(),
             'email_verified_at' => now(),
-            'password' => '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm',
-            'remember_token' => Str::random(10)
+            'password' => Hash::make('14735848'),
+            'remember_token' => Str::random(10),
         ];
     }
 

@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Enums\Category;
+use App\Models\Shop;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -18,7 +20,11 @@ class ProductFactory extends Factory
     {
         return [
             'name' => $this -> faker -> words(2, true),
-            'rating' => $this -> faker -> numberBetween(1,5),
+            'image' => 'https://picsum.photos/seed/' . $this->faker->uuid . '/75/75',
+            'description' => $this -> faker -> words(10, true),
+            'view_description' => $this -> faker -> words(25, true),
+            'category' => $this -> faker -> randomElement(Category::cases()),
+            'rating' => $this -> faker -> numberBetween(1,5)
         ];
     }
 }
