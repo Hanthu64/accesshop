@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Enums\Role;
 use App\Models\Product;
 use App\Models\Shop;
 use App\Models\User;
@@ -17,9 +18,15 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory(10)->create();
         Product::factory(10)->create();
         Shop::factory(10)->create();
+        User::factory(10)->create()->each(function ($user) {
+            if ($user->role === Role::Provider) {
+                // Asignar una tienda aleatoria
+                $user->shop_id = Shop::inRandomOrder()->first()->id;
+            }
+            $user->save();
+        });
 
         foreach (Shop::all() as $shop) {
             $products = Product::inRandomOrder()->limit(3)->pluck('id')->toArray();
@@ -31,5 +38,7 @@ class DatabaseSeeder extends Seeder
                 ]);
             }
         }
+
+
     }
 }

@@ -23,10 +23,12 @@
                 </div>
             </form>
             @auth
-                <div class="flex items-center">
-                    <img src="{{ asset(auth()->user()->image) }}" alt="pfp" class="mx-2 w-[50px] h-[50px]">
-                    <p>{{ auth()->user()->name }}</p>
-                </div>
+                <form action="{{ route("profile") }}" method="GET">
+                    <button class="flex items-center hidden md:flex">
+                        <img src="{{ asset(auth()->user()->image) }}" alt="pfp" class="mx-2 w-[50px] h-[50px]">
+                        <span>{{ auth()->user()->name }}</span>
+                    </button>
+                </form>
             @else
                 <form action="{{ route("login") }}" method="GET">
                     <button class="hidden md:flex bg-yellow-500 text-white hover:bg-yellow-600 px-4 py-2 rounded-md" type="submit">
@@ -56,12 +58,14 @@
             <h4 class="text-lg font-semibold">Cuenta</h4>
 
             @auth
-                <div class="flex items-center">
+                <div class="flex flex-col items-center gap-1">
                     <img src="{{ asset(auth()->user()->image) }}" alt="pfp" class="mx-2 w-[50px] h-[50px]">
                     <p>{{ auth()->user()->name }}</p>
-                    <button class="bg-yellow-400 text-white w-3/4 py-2 rounded-md" type="submit">
-                        <span>Perfil</span>
-                    </button>
+                    <form action="{{ route("profile") }}" method="GET" class="bg-yellow-400 text-white w-3/4 py-2 rounded-md">
+                        <button type="submit">
+                            <span>Perfil</span>
+                        </button>
+                    </form>
                 </div>
             @else
                 <form action="{{ route("login") }}" method="GET" class="bg-yellow-400 text-white w-3/4 py-2 rounded-md">
@@ -118,13 +122,13 @@
     <!-- EL MAIN -->
     <main class="bg-white border border-gray-200 rounded-lg shadow-md m-6 flex flex-col items-center">
         <p class="text-4xl py-2 px-4">{{ $product -> name }}</p>
-        <div class="grid grid-cols-3">
+        <div class="flex flex-col md:grid md:grid-cols-3">
             <div class="mx-auto">
                 <p class="py-2 px-4">
                     <img src="{{ $product->image }}" alt="Sin foto" class="w-[300px] h-[300px]">
                 </p>
             </div>
-            <div class="col-span-2">
+            <div class="col-span-2 text-center md:text-left">
                 <div>
                     <p class="text-3xl py-2 px-4 flex align-items-start">Categoría: {{$product -> category}}</p>
                 </div>
@@ -136,7 +140,22 @@
         </div>
         <div class="m-4 w-full px-6 flex flex-col items-center">
             <p class="text-3xl m-2">Tiendas disponibles</p>
-            @foreach($product -> shop as $shop)
+            <div class="flex gap-2 items-center">
+                <p>Ordenar por:</p>
+                <form action="{{ route("show.product", $product -> id) }}">
+                    <input type="hidden" name="sortBy" value="price">
+                    <button class="hidden md:flex bg-yellow-500 text-white hover:bg-yellow-600 px-4 py-2 rounded-md" type="submit">
+                        <span>Precio</span>
+                    </button>
+                </form>
+                <form action="{{ route("show.product", $product -> id) }}">
+                    <input type="hidden" name="sortBy" value="rating">
+                    <button class="hidden md:flex bg-yellow-500 text-white hover:bg-yellow-600 px-4 py-2 rounded-md" type="submit">
+                        <span>Valoración</span>
+                    </button>
+                </form>
+            </div>
+            @foreach($sorter as $shop)
                 <div class="w-full m-12 bg-yellow-100 border border-gray-300 rounded-md">
                     <div class="flex items-center justify-center p-4">
                         <!-- Imagen -->

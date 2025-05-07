@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Enums\Category;
+use App\Enums\Role;
 use App\Models\Shop;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
@@ -32,6 +33,7 @@ class UserFactory extends Factory
             'email' => $this -> faker -> unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => Hash::make('14735848'),
+            'role' => $this->faker->randomElement(Role::cases()),
             'remember_token' => Str::random(10),
         ];
     }

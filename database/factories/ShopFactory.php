@@ -20,7 +20,7 @@ class ShopFactory extends Factory
         return [
             'name' => $this -> faker -> words(2, true),
             'homepage' => $this -> faker -> url(),
-            'image' => 'https://picsum.photos/seed/' . $this->faker->uuid . '/75/75',
+            'image' => 'https://picsum.photos/seed/' . $this->faker->uuid . '/150/150',
         ];
     }
 }

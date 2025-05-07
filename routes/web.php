@@ -1,11 +1,12 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [App\Http\Controllers\ProductController::class, 'index'])
+    ->middleware(['auth', 'verified'])
+    ->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -23,7 +24,20 @@ Route::get('/product/{product}', [\App\Http\Controllers\ProductController::class
 
 Route::get('/users', [\App\Http\Controllers\UserController::class, 'list']) -> name('users.list');
 
+Route::get('/profile', [\App\Http\Controllers\UserController::class, 'profile']) -> name('profile');
 
+Route::get('/profile/product-create', [\App\Http\Controllers\ProductController::class, 'create']) -> name('product.create');
 
+Route::put('/profile/product-create', [\App\Http\Controllers\ProductController::class, 'store']) -> name('product.store');
 
+Route::delete('/profile/product/{product}', [\App\Http\Controllers\ProductController::class, 'delete']) -> name('product.delete');
 
+Route::get('/profile/product-edit/{product}', [\App\Http\Controllers\ProductController::class, 'edit']) -> name('product.edit');
+
+Route::put('/profile/product/{product}', [\App\Http\Controllers\ProductController::class, 'update']) -> name('product.update');
+
+Route::delete('/profile/user/{user}', [\App\Http\Controllers\UserController::class, 'delete']) -> name('user.delete');
+
+Route::get('/profile/user-edit/{user}', [\App\Http\Controllers\UserController::class, 'edit']) -> name('user.edit');
+
+Route::put('/profile/user/{user}', [\App\Http\Controllers\UserController::class, 'update']) -> name('user.update');

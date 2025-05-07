@@ -20,11 +20,10 @@ class ProductFactory extends Factory
     {
         return [
             'name' => $this -> faker -> words(2, true),
-            'image' => 'https://picsum.photos/seed/' . $this->faker->uuid . '/75/75',
+            'image' => 'https://picsum.photos/seed/' . $this->faker->uuid . '/150/150',
             'description' => $this -> faker -> words(10, true),
             'view_description' => $this -> faker -> words(25, true),
-            'category' => $this -> faker -> randomElement(Category::cases()),
-            'rating' => $this -> faker -> numberBetween(1,5)
+            'category' => $this -> faker -> randomElement(Category::cases())
         ];
     }
 }

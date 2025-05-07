@@ -23,16 +23,18 @@
                 </div>
             </form>
             @auth
-                <div class="flex items-center">
-                    <img src="{{ asset(auth()->user()->image) }}" alt="pfp" class="mx-2 w-[50px] h-[50px]">
-                    <p>{{ auth()->user()->name }}</p>
-                </div>
+                <form action="{{ route("profile") }}" method="GET">
+                    <button class="flex items-center hidden md:flex">
+                        <img src="{{ asset(auth()->user()->image) }}" alt="pfp" class="mx-2 w-[50px] h-[50px]">
+                        <span>{{ auth()->user()->name }}</span>
+                    </button>
+                </form>
             @else
-            <form action="{{ route("login") }}" method="GET">
-                <button class="hidden md:flex bg-yellow-500 text-white hover:bg-yellow-600 px-4 py-2 rounded-md" type="submit">
-                    <span>Iniciar sesión</span>
-                </button>
-            </form>
+                <form action="{{ route("login") }}" method="GET">
+                    <button class="hidden md:flex bg-yellow-500 text-white hover:bg-yellow-600 px-4 py-2 rounded-md" type="submit">
+                        <span>Iniciar sesión</span>
+                    </button>
+                </form>
             @endauth
 
             <!--BOTÓN MÓVIL-->
@@ -56,12 +58,14 @@
             <h4 class="text-lg font-semibold">Cuenta</h4>
 
             @auth
-                <div class="flex items-center">
+                <div class="flex flex-col items-center gap-1">
                     <img src="{{ asset(auth()->user()->image) }}" alt="pfp" class="mx-2 w-[50px] h-[50px]">
                     <p>{{ auth()->user()->name }}</p>
-                    <button class="bg-yellow-400 text-white w-3/4 py-2 rounded-md" type="submit">
-                        <span>Perfil</span>
-                    </button>
+                    <form action="{{ route("profile") }}" method="GET" class="bg-yellow-400 text-white w-3/4 py-2 rounded-md">
+                        <button type="submit">
+                            <span>Perfil</span>
+                        </button>
+                    </form>
                 </div>
             @else
                 <form action="{{ route("login") }}" method="GET" class="bg-yellow-400 text-white w-3/4 py-2 rounded-md">
@@ -82,9 +86,9 @@
             <h4 class="text-lg font-semibold mt-6">Categorías</h4>
             <div class="flex flex-wrap justify-center gap-2">
                 @foreach($categories as $category)
-                        <form action="{{ route("index.filter", $category) }}" class="text-white">
-                            <button class="bg-yellow-400 text-white px-4 py-2 rounded-md">{{$category}}</button>
-                        </form>
+                    <form action="{{ route("index.filter", $category) }}" class="text-white">
+                        <button class="bg-yellow-400 text-white px-4 py-2 rounded-md">{{$category}}</button>
+                    </form>
                 @endforeach
 
             </div>
@@ -103,11 +107,11 @@
         <div class="mx-auto">
             <ul class="flex space-x-20">
                 @foreach($categories as $category)
-                <li>
-                    <form action="{{ route("index.filter", $category) }}" class="text-white">
-                        <button>{{$category}}</button>
-                    </form>
-                </li>
+                    <li>
+                        <form action="{{ route("index.filter", $category) }}" class="text-white">
+                            <button>{{$category}}</button>
+                        </form>
+                    </li>
                 @endforeach
             </ul>
         </div>
@@ -216,7 +220,6 @@
         <p>©AccesShop 2023-2023. Todos los derechos reservados.</p>
     </div>
 </footer>
-@vite(['resources/js/login.js'])
 </body>
 </html>
 
