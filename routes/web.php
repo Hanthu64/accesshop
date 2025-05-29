@@ -18,6 +18,8 @@ require __DIR__.'/auth.php';
 
 Route::get('/', [\App\Http\Controllers\ProductController::class, 'index'])->name('index');
 
+Route::get('/advanced-search', [\App\Http\Controllers\ProductController::class, 'advancedSearch'])->name('advanced-search');
+
 Route::get('/category/{category}', [\App\Http\Controllers\ProductController::class, 'filter'])->name('index.filter');
 
 Route::get('/product/{product}', [\App\Http\Controllers\ProductController::class, 'show'])->name('show.product');

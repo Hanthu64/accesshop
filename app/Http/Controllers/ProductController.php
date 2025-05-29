@@ -10,16 +10,19 @@ use Illuminate\Http\Request;
 class ProductController extends Controller
 {
     public function index(Request $q){
-        $categories = Category::cases();
         $products = Product::query();
 
         if($q -> filled('search')){
             $products = $products -> where('name', 'like', '%' . $q -> search . '%') -> get();
         }else{
-            $products = Product::all()->sortByDesc("rating");
+            $products = Product::all();
         }
 
-        return view('index', compact('products', 'categories'));
+        return view('index', compact('products'));
+    }
+
+    public function advancedSearch(){
+        return view('advanced-search');
     }
 
     public function filter($category){
