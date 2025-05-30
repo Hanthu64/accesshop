@@ -18,6 +18,10 @@ class ProductController extends Controller
             $products = Product::all();
         }
 
+        foreach($products as $product){
+            $product->setRelation('shop', $product->shop->sortBy(fn($shop) => $shop->pivot->price)->values());
+        }
+
         return view('index', compact('products'));
     }
 

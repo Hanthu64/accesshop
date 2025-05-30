@@ -38,17 +38,19 @@
                             </tr>
                         </thead>
                         <tbody>
-                        @foreach($product -> shop -> take(3) as $shop)
+                        @foreach($product -> shop -> take(3) -> pad(3, null) as $shop)
                             <tr class="border-b  {{ $loop -> odd ? 'bg-gray-200' : '' }}">
-                                <td class="py-2 px-4">{{ $shop -> name }}</td>
+                                <td class="py-2 px-4">{{ $shop ? $shop -> name : 'N/A'}}</td>
                                 <td class="py-2 px-4 flex">
-                                    @for($i = 1; $i <= $shop -> pivot -> rating; $i++)
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20" fill="currentColor">
-                                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.975a1 1 0 00.95.69h4.184c.969 0 1.371 1.24.588 1.81l-3.39 2.463a1 1 0 00-.364 1.118l1.286 3.975c.3.921-.755 1.688-1.54 1.118l-3.39-2.463a1 1 0 00-1.175 0l-3.39 2.463c-.784.57-1.838-.197-1.539-1.118l1.286-3.975a1 1 0 00-.364-1.118L2.04 9.402c-.783-.57-.38-1.81.588-1.81h4.184a1 1 0 00.95-.69l1.287-3.975z" />
-                                        </svg>
-                                    @endfor
+                                    @if($shop)
+                                        @for($i = 1; $i <= $shop -> pivot -> rating; $i++)
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20" fill="currentColor">
+                                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.975a1 1 0 00.95.69h4.184c.969 0 1.371 1.24.588 1.81l-3.39 2.463a1 1 0 00-.364 1.118l1.286 3.975c.3.921-.755 1.688-1.54 1.118l-3.39-2.463a1 1 0 00-1.175 0l-3.39 2.463c-.784.57-1.838-.197-1.539-1.118l1.286-3.975a1 1 0 00-.364-1.118L2.04 9.402c-.783-.57-.38-1.81.588-1.81h4.184a1 1 0 00.95-.69l1.287-3.975z" />
+                                            </svg>
+                                        @endfor
+                                    @endif
                                 </td>
-                                <td class="py-2 px-2">{{ $shop -> pivot -> price }}€</td>
+                                <td class="py-2 px-2">{{ $shop ? $shop -> pivot -> price : '0'}}€</td>
                             </tr>
                         @endforeach
                         </tbody>
