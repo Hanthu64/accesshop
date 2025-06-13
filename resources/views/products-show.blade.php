@@ -7,7 +7,7 @@
         <div class="flex flex-col md:grid md:grid-cols-3 pt-6">
             <div class="mx-auto">
                 <p class="py-2 px-4">
-                    <img src="{{ $product -> image }}" alt="Sin foto" class="w-[300px] h-[300px]">
+                    <img src="{{ asset($product -> image) }}" alt="Sin foto" class="w-[300px] h-[300px]">
                 </p>
             </div>
             <div class="col-span-2 text-center md:text-left">
