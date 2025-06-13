@@ -2,43 +2,95 @@
 
 namespace App\Http\Controllers;
 
-use App\Enums\Category;
+use App\Enums\CategoryOld;
+use App\Models\Category;
 use App\Models\Product;
 use App\Models\Shop;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
     public function index(Request $q){
         $products = Product::query();
+        $categories = Category::all();
 
         if($q -> filled('search')){
-            $products = $products -> where('name', 'like', '%' . $q -> search . '%') -> get();
-        }else{
-            $products = Product::all();
+            $products = $products -> where('name', 'like', '%' . $q -> search . '%');
         }
+
+        if($q -> filled('category')){
+            $products = $products -> where('category_id', 'like', $q -> category);
+        }
+
+        $products = $products -> paginate(10);
 
         foreach($products as $product){
-            $product->setRelation('shop', $product->shop->sortBy(fn($shop) => $shop->pivot->price)->values());
+            if($q->filled('shopPreviewSorter') && $q->shopPreviewSorter == 2){
+                $product->setRelation('shop', $product->shop->sortByDesc(fn($shop) => $shop->pivot->rating)->values());
+            }else{
+                $product->setRelation('shop', $product->shop->sortBy(fn($shop) => $shop->pivot->price)->values());
+            }
         }
 
-        return view('index', compact('products'));
+        return view('index', compact('products', 'categories'));
     }
 
-    public function advancedSearch(){
-        return view('advanced-search');
+    public function individualSearch(Request $q){
+        $categories = Category::all();
+        $shops = Shop::orderBy('name', 'asc') -> get();
+        $products = DB::table('products_shops')
+            ->join('products', 'products_shops.product_id', '=', 'products.id')
+            ->join('shops', 'products_shops.shop_id', '=', 'shops.id')
+            ->select('products.name as product_name',
+                'shops.name as shop_name',
+                'products.image as product_image',
+                'shops.image as shop_image',
+                'products.*',
+                'shops.*',
+                'products_shops.*');
+
+        if($q -> filled('searchProdName')){
+            $products = $products -> where('products.name', 'like', '%' . $q -> searchProdName . '%');
+        }
+
+        if($q -> filled('category')){
+            $products = $products -> where('category_id', 'like', $q -> category);
+        }
+
+        if($q -> filled('shop')){
+            $products = $products -> where('shop_id', $q -> shop);
+        }
+
+        if($q -> filled('price_min') && $q -> filled('price_max')) {
+            $products = $products->whereBetween('products_shops.price', [
+                $q->input('price_min'),
+                $q->input('price_max')
+            ]);
+        }
+
+        $products = $products -> get();
+
+        if ($q->filled('sorter') && $q->sorter == 2) {
+            $products = $products->sortByDesc('rating')->values();
+        } else {
+            $products = $products->sortBy('price')->values();
+        }
+
+
+        return view('individual-search', compact('products', 'categories', 'shops'));
     }
 
     public function filter($category){
-        $categories = Category::cases();
         $products = Product::all();
         $products = $products->where('category', $category)->sortByDesc("rating");
-        return view('index', compact('products', 'categories'));
+        return view('index', compact('products'));
     }
 
     public function show($id, Request $request){
         $product = Product::query()->findOrFail($id);
-        $categories = Category::cases();
+
         if($request -> query('sortBy') == "price"){
             $sorter = $product -> shop -> sortBy(function($product) {
                 return $product->pivot->price;
@@ -49,11 +101,22 @@ class ProductController extends Controller
             });
         }
 
-        return view('products-show', compact('product', 'categories', 'sorter'));
+        $currentPage = LengthAwarePaginator::resolveCurrentPage();
+        $perPage = 5;
+        $currentItems = $sorter->slice(($currentPage - 1) * $perPage, $perPage)->values();
+        $paginator = new LengthAwarePaginator(
+            $currentItems,
+            $sorter->count(),
+            $perPage,
+            $currentPage,
+            ['path' => $request->url(), 'query' => $request->query()]
+        );
+
+        return view('products-show', compact('product',  'paginator'));
     }
 
     public function create(){
-        $categories = Category::cases();
+        $categories = Category::all();
         return view('product-create-modal', compact('categories'));
     }
     public function delete($id){
@@ -66,7 +129,7 @@ class ProductController extends Controller
     public function edit($id){
         $shop = Shop::find(auth()->user()->shop_id);
         $product = $shop->product()->find($id);
-        $categories = Category::cases();
+        $categories = Category::all();
         return view('product-edit-modal', auth()->user(), compact('product', 'categories'));
     }
 

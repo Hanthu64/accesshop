@@ -2,25 +2,36 @@
 
 @section('content')
 
-    <!-- EL MAIN -->
-    <main class="bg-white border border-gray-200 rounded-lg shadow-md m-6 flex flex-col items-center max-w-[1400px] mx-auto">
-        <p class="text-4xl py-2 px-4">{{ $product -> name }}</p>
-        <div class="flex flex-col md:grid md:grid-cols-3">
+    <!-- MAIN -->
+    <main class="bg-yellow-50 border border-gray-200 rounded-lg shadow-md m-6 flex flex-col items-center max-w-[1400px] mx-auto">
+        <div class="flex flex-col md:grid md:grid-cols-3 pt-6">
             <div class="mx-auto">
                 <p class="py-2 px-4">
-                    <img src="{{ $product->image }}" alt="Sin foto" class="w-[300px] h-[300px]">
+                    <img src="{{ $product -> image }}" alt="Sin foto" class="w-[300px] h-[300px]">
                 </p>
             </div>
             <div class="col-span-2 text-center md:text-left">
-                <div>
-                    <p class="text-3xl py-2 px-4 flex align-items-start">Categoría: {{$product -> category}}</p>
-                </div>
-                <div>
-                    <p class="text-3xl py-2 px-4 flex align-items-start">Descripción:</p>
-                    <p class="text-2xl py-2 px-4">{{$product -> view_description}}</p>
-                </div>
+                <p class="text-4xl pb-4 text-center">{{ $product -> name }}</p>
+                <table class="min-w-full mb-3">
+                    <thead>
+                    <tr class="m-2">
+                        <th class="py-2 px-4 text-left">DETALLES</th>
+                    </tr>
+                    </thead>
+                    <tbody class="border border-gray-200">
+                        <tr class="rounded-md bg-gray-200">
+                            <td class="py-2 px-2">Categoría</td>
+                            <td class="py-2 px-4">{{ $product -> category -> name }}</td>
+                        </tr>
+                        <tr class="rounded-md">
+                            <td class="py-2 px-2">Descripción</td>
+                            <td class="py-2 px-2">{{ $product -> description }}</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
+
         <div class="m-4 w-full px-6 flex flex-col items-center">
             <p class="text-3xl m-2">Tiendas disponibles</p>
             <div class="flex gap-2 items-center">
@@ -38,18 +49,19 @@
                     </button>
                 </form>
             </div>
-            @foreach($sorter as $shop)
-                <div class="w-full m-12 bg-yellow-100 border border-gray-300 rounded-md">
-                    <div class="flex items-center justify-center p-4">
+            <div class="flex flex-wrap basis-3 gap-2 mt-3 justify-center">
+            @foreach($paginator as $shop)
+                <div class="flex bg-yellow-100 border border-gray-300 rounded-md">
+                    <div class="flex flex-col items-center justify-center p-4">
                         <!-- Imagen -->
-                        <div class="w-full md:w-1/4 flex justify-center mb-4 md:mb-0">
+                        <div class="flex flex-col items-center gap-2 mb-4 md:mb-0">
                             <img src="{{$shop -> image}}" class="w-3/4" alt="{{$shop -> name}}">
+                            <p class="text-xl font-bold">{{$shop -> name}}</p>
                         </div>
 
                         <!-- Información del producto -->
-                        <div class="w-full md:w-1/2 flex flex-col items-center">
-                            <p class="text-2xl">{{$shop -> name}}</p>
-                            <div class="w-full flex justify-around">
+                        <div class="md:w-1/2 flex flex-col items-center">
+                            <div class="flex flex-col gap-1 items-center">
                                 <div>
                                     <b>Valoración:</b>
                                     <p class="flex text-yellow-400">
@@ -70,19 +82,23 @@
                         <!-- Botón para desktop -->
                         <div class="hidden md:flex w-full md:w-1/4 justify-center items-center mt-4 md:mt-0">
                             <a href="{{$shop -> pivot -> product_link}}" class="bg-yellow-500 text-white px-6 py-3 rounded-md hover:bg-yellow-600 transition">
-                                    Ir a la página
+                                    Página
                             </a>
                         </div>
 
                         <!-- Botón para móvil -->
                         <div class="flex md:hidden w-full justify-center mt-4">
                             <button type="button" class="bg-yellow-500 text-white px-4 py-2 rounded-md hover:bg-yellow-600 transition">
-                                Ir al producto
+                                Página
                             </button>
                         </div>
                     </div>
                 </div>
             @endforeach
+            </div>
+            <div class="pagination">
+                {{ $paginator->links() }}
+            </div>
         </div>
     </main>
 @endsection

@@ -1,7 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Enums\Category;
+use App\Enums\CategoryOld;
 use App\Enums\Role;
 use App\Models\Product;
 use App\Models\Shop;
@@ -12,14 +12,12 @@ class UserController extends Controller
 {
     public function list(){
         $users = User::all();
-        $categories = Category::cases();
 
-        return view('users', compact('users', 'categories'));
+        return view('users', compact('users'));
     }
 
     public function profile()
     {
-        $categories = Category::cases();
         if (auth()->user()->role == 'provider') {
             $roles = null;
             $shop = Shop::find(auth()->user()->shop_id);
@@ -36,7 +34,7 @@ class UserController extends Controller
             $products = null;
             $users = null;
         }
-        return view('profile', auth()->user(), compact('categories', 'roles', 'shop', 'products', 'users'));
+        return view('profile', auth()->user(), compact('roles', 'shop', 'products', 'users'));
     }
 
     public function edit($id){

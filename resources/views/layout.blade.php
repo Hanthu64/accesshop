@@ -10,7 +10,7 @@
 <header>
     <!--LOS NAV-->
     <nav class="flex items-center bg-gray-100 px-4 py-2 border-b">
-        <div class="max-w-[1400px] mx-auto flex items-center w-full justify-between mx-auto px-4">
+        <div class="max-w-[1400px] mx-auto flex items-center w-full justify-between px-4">
             <form action="{{route("index")}}" class="navbar-brand col-2">
                 <button>
                     <img src="{{ asset('images/logo.png') }}" alt="Logo" class="w-[200px] h-[100px] object-contain">
@@ -22,17 +22,16 @@
                     <button class="btn px-4 py-2 border border-yellow-400 text-yellow-400 rounded-r-md hover:bg-yellow-400 hover:text-white transition"  type="submit">Buscar</button>
                 </div>
             </form>
-            <form action="{{ route("advanced-search") }}" method="GET">
-                <button class="hidden md:flex bg-yellow-500 text-white hover:bg-yellow-600 px-4 py-2 rounded-md" type="submit">
-                    <span>Búsqueda avanzada</span>
-                </button>
-            </form>
             @auth
                 <form action="{{ route("profile") }}" method="GET">
-                    <button class="flex items-center hidden md:flex">
+                    <button class="items-center hidden md:flex">
                         <img src="{{ asset(auth()->user()->image) }}" alt="pfp" class="mx-2 w-[50px] h-[50px]">
                         <span>{{ auth()->user()->name }}</span>
                     </button>
+                </form>
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button class="bg-yellow-500 text-white hover:bg-yellow-600 px-4 py-2 mb-4 rounded-md" type="submit">Cerrar Sesión</button>
                 </form>
             @else
                 <form action="{{ route("login") }}" method="GET">
@@ -70,6 +69,10 @@
                         <button type="submit">
                             <span>Perfil</span>
                         </button>
+                    </form>
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <button class="bg-yellow-500 text-white hover:bg-yellow-600 px-4 py-2 mb-4 rounded-md" type="submit">Cerrar Sesión</button>
                     </form>
                 </div>
             @else

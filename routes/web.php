@@ -18,7 +18,7 @@ require __DIR__.'/auth.php';
 
 Route::get('/', [\App\Http\Controllers\ProductController::class, 'index'])->name('index');
 
-Route::get('/advanced-search', [\App\Http\Controllers\ProductController::class, 'advancedSearch'])->name('advanced-search');
+Route::get('/individual-search', [\App\Http\Controllers\ProductController::class, 'individualSearch'])->name('individual-search');
 
 Route::get('/category/{category}', [\App\Http\Controllers\ProductController::class, 'filter'])->name('index.filter');
 

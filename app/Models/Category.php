@@ -7,18 +7,21 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Product extends Model
+class Category extends Model
 {
     use HasFactory;
     protected $fillable = [
         'name',
-        'image',
-        'description'
     ];
 
-    public function category(): belongsTo{
-        return $this->belongsTo(Category::class);
+    protected $casts = [
+        'category' => Category::class,
+    ];
+
+    public function products(): hasMany{
+        return $this->hasMany(Product::class);
     }
 
     public function shop(): BelongsToMany{
@@ -26,3 +29,4 @@ class Product extends Model
             ->withPivot('product_link', 'rating', 'price');
     }
 }
+

@@ -3,16 +3,51 @@
 @section('content')
 
     <!--PRODUCTOS-->
-    <div class="max-w-[1400px] mx-auto bg-yellow-50 border border-gray-300 rounded-md m-3">
-        <div class="text-center row justify-content-center py-4">
-            <p class="text-2xl">Lista de productos</p>
-        </div>
+    <div class="max-w-[1400px] mx-auto bg-yellow-50 border border-gray-300 rounded-md m-3 p-2">
+        <form id="advancedSearch1" method="GET" action="{{ route("index") }}" class="flex flex-col py-2 gap-2 mb-3 mx-12">
+            <p class="text-2xl self-center">Productos con tiendas</p>
+            <div class="flex flex-col">
+                <div class="flex justify-evenly">
+                    <div class="py-2 px-4 w-1/3">
+                        <p class="text-xl">Buscar por nombre</p>
+                        <input type="search" name="search" placeholder="Buscar..." class="h-12 border border-gray-300 text-base rounded-lg block w-full py-3 px-4 focus:outline-none">
+                    </div>
+
+                    <div class="py-2 px-4">
+                        <p class="text-xl">Filtrar por categoría</p>
+                        <select name="category" id="category" class="h-12 border border-gray-300 text-base rounded-lg block w-full py-3 px-4 focus:outline-none">
+                            <option value="">Seleccione una categoría</option>
+                            @foreach($categories as $category)
+                                <option value="{{ $category -> id }}">{{ $category -> name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="py-2 px-4">
+                        <p class="text-xl">Ordenar previsualización de tiendas</p>
+                        <select name="shopPreviewSorter" id="shopPreviewSorter" class="h-12 border border-gray-300 text-base rounded-lg block w-full py-3 px-4 focus:outline-none">
+                            <option value="1">Precio</option>
+                            <option value="2">Valoración</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="flex justify-evenly pt-4">
+                    <button type="submit" class="rounded p-3 border border-gray-200 shadow mx-2 gap-2 w-1/4">🔍
+                        <span>Buscar</span>
+                    </button>
+                    <button type="button" class="rounded p-3 border border-gray-200 shadow mx-2 gap-2 w-1/4" onclick="window.location.href='{{ route("individual-search") }}'" >
+                        <span>Buscar por producto individual</span> 👉
+                    </button>
+                </div>
+            </div>
+        </form>
+
         @foreach($products as $product)
         <div class="mb-3 mx-12 bg-yellow-100 border border-gray-300 rounded-md">
             <div class="flex p-4">
                 <!-- Imagen -->
                 <div class="w-full md:w-1/4 flex justify-center mb-4 md:mb-0">
-                    <img src="{{$product -> image}}" alt="{{$product -> name}}">
+                    <img src="{{$product -> image}}" alt="{{$product -> name}}" class="border rounded-md bg-white p-4">
                 </div>
 
                 <!-- Título y botón para ir a página del producto -->
@@ -59,5 +94,8 @@
             </div>
         </div>
     @endforeach
+        <div class="pagination">
+            {{ $products->links() }}
+        </div>
     </div>
 @endsection

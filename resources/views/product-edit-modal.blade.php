@@ -22,35 +22,11 @@
     </div>
 
     <div class="mb-4">
-        <label>Categoría</label>
-        <select name="category" id="category" class="mt-1 p-2 w-full border rounded-md" required>
-            <option value="">Seleccione una categoría</option>
-            @foreach($categories as $category)
-                <option value="{{ $category }}" {{ old('category', $product->category) == $category ? 'selected' : '' }}>
-                    {{ ucfirst($category -> name)}}
-                </option>
-            @endforeach
-        </select>
-    </div>
-
-    <div class="mb-4">
         <label for="description" class="block text-sm font-medium text-gray-700">Descripción</label>
         <input type="text" id="description" name="description" value="{{ old('description', $product -> description) }}" class="mt-1 p-2 w-full border rounded-md" required>
         @error('description')
         <span class="text-red-500 text-xs">{{ $message }}</span>
         @enderror
-    </div>
-
-    <div class="mb-4">
-        <label for="view_description" class="block text-sm font-medium text-gray-700">Descripción extendida</label>
-        <textarea type="text" id="view_description" name="view_description" rows="3" class="mt-1 p-2 w-full border rounded-md" required>{{ old('name', $product -> view_description) }}</textarea>
-        @error('view_description')
-        <span class="text-red-500 text-xs">{{ $message }}</span>
-        @enderror
-    </div>
-
-    <div class="mb-4">
-
     </div>
 
     <div class="mb-4">
