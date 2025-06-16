@@ -31,7 +31,7 @@
                 </form>
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
-                    <button class="bg-yellow-500 text-white hover:bg-yellow-600 px-4 py-2 mb-4 rounded-md" type="submit">Cerrar Sesión</button>
+                    <button class="bg-yellow-500 text-white hover:bg-yellow-600 px-4 py-2 mb-4 rounded-md hidden md:block" type="submit">Cerrar Sesión</button>
                 </form>
             @else
                 <form action="{{ route("login") }}" method="GET">

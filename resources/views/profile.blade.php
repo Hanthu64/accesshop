@@ -1,8 +1,8 @@
 @extends('layout')
 
 @section('content')
-<main class="bg-white border border-gray-200 rounded-lg shadow-md m-6">
-    <p class="text-4xl py-2 px-4">{{ auth() -> user() -> name }}</p>
+<main class="bg-yellow-50 border border-gray-200 rounded-lg shadow-md m-6 flex flex-col items-center max-w-[1400px] mx-auto">
+    <p class="text-4xl py-2 px-4 my-6">{{ auth() -> user() -> name }}</p>
     <div class="w-full flex flex-col md:flex-row gap-6 justify-evenly mb-6">
         <div class="flex flex-col items-center gap-4">
             <img src="{{ auth() -> user() ->image }}" alt="Sin foto" class="w-[300px] h-[300px]">
@@ -18,7 +18,9 @@
             @if(auth()->user()->role === 'provider')
                 <div class="flex flex-col items-center gap-4">
                     <p class="text-2xl">Cuenta de proveedor</p>
-                    <img src="{{ $shop -> image }}" alt="Foto de la tienda" class="mx-2 w-[200px] h-[200px]">
+                    <div class="flex flex-col items-center mb-4 bg-white w-[200px] h-[200px] justify-center border border-gray-300 rounded-md">
+                        <img src="{{ $shop -> image }}" alt="Foto de la tienda">
+                    </div>
                     <p class="text-xl">{{ $shop -> name }}</p>
                 </div>
             @endif

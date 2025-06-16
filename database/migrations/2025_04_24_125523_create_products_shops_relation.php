@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId("product_id")->constrained("products");
             $table->foreignId("shop_id")->constrained("shops");
             $table->double("rating")->nullable();
-            $table->string("product_link")->nullable();
+            $table->text("product_link")->nullable();
             $table->double("price")->nullable();
             $table->timestamps();
         });

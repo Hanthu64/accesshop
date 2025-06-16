@@ -14,16 +14,16 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="font-sans text-gray-900 antialiased">
-        <div class="min-h-screen flex sm:justify-center items-center pt-6 sm:pt-0 bg-yellow-300 md:bg-yellow-100 dark:bg-gray-900">
-            <div class="w-full max-w-lg bg-yellow-300 flex flex-col justify-center items-center p-8 sm:rounded-lg">
+    <body class="font-sans text-gray-900 antialiased bg-yellow-300">
+        <div class="min-h-screen flex sm:justify-center items-center pt-6 sm:pt-0">
+            <div class="w-full max-w-lg bg-yellow-50 border-gray-300 rounded-md flex flex-col justify-center items-center p-8 sm:rounded-lg">
                 <div>
                     <a href="/">
                         <img src="{{ asset('images/logo.png') }}" alt="Logo" class="w-[200px] h-[100px] object-contain">
                     </a>
                 </div>
 
-                <div class="w-full border mt-6 px-6 py-6 bg-yellow-200 dark:bg-gray-800 overflow-hidden sm:rounded-lg">
+                <div class="w-full border mt-6 px-6 py-6 bg-yellow-200 overflow-hidden sm:rounded-lg">
                     {{ $slot }}
                 </div>
             </div>

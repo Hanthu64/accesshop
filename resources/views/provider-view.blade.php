@@ -2,7 +2,7 @@
                 <p class="text-3xl font-bold mb-4 text-center">Vista de proveedor</p>
                 <p class="text-2xl font-bold mb-4 text-center">Productos de {{ $shop -> name }}</p>
 
-                <table class="border border-gray-200 shadow-md mb-3 bg-yellow-100 rounded-md">
+                <table class="border border-gray-200 shadow-md mb-3 bg-yellow-100 rounded-md mx-4">
                     <thead>
                     <tr>
                         <th class="py-2 px-4 text-left">ID</th>
@@ -12,7 +12,7 @@
                     </thead>
                     <tbody id="data-container">
                     @foreach($products as $product)
-                        <tr class="border-b hover:bg-yellow-300">
+                        <tr class="border-b  {{ $loop -> odd ? 'bg-gray-200' : '' }}">
                             <td class="py-2 px-4">{{$product -> id}}</td>
                             <td class="py-2 px-4">{{$product -> name}}</td>
                             <td class="py-2 px-4">{{$product -> pivot -> price}}</td>

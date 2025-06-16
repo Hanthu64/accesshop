@@ -7,8 +7,8 @@
         <form id="advancedSearch1" method="GET" action="{{ route("index") }}" class="flex flex-col py-2 gap-2 mb-3 mx-12">
             <p class="text-2xl self-center">Productos con tiendas</p>
             <div class="flex flex-col">
-                <div class="flex justify-evenly">
-                    <div class="py-2 px-4 w-1/3">
+                <div class="flex flex-col md:flex-row justify-evenly">
+                    <div class="py-2 px-4 md:w-1/3">
                         <p class="text-xl">Buscar por nombre</p>
                         <input type="search" name="search" placeholder="Buscar..." class="h-12 border border-gray-300 text-base rounded-lg block w-full py-3 px-4 focus:outline-none">
                     </div>
@@ -35,23 +35,24 @@
                     <button type="submit" class="rounded p-3 border border-gray-200 shadow mx-2 gap-2 w-1/4">🔍
                         <span>Buscar</span>
                     </button>
-                    <button type="button" class="rounded p-3 border border-gray-200 shadow mx-2 gap-2 w-1/4" onclick="window.location.href='{{ route("individual-search") }}'" >
-                        <span>Buscar por producto individual</span> 👉
+                    <button type="button" class="rounded p-3 border border-gray-200 shadow mx-2 gap-2 w-1/4" onclick="window.location.href='{{ route("individual-search") }}'"> 👉
+                        <span class="hidden md:block">Buscar por producto individual</span>
+                        <span class="md:hidden">Buscar más</span>
                     </button>
                 </div>
             </div>
         </form>
 
         @foreach($products as $product)
-        <div class="mb-3 mx-12 bg-yellow-100 border border-gray-300 rounded-md">
-            <div class="flex p-4">
+        <div class="mt-4 mb-3 mx-12 bg-yellow-100 border border-gray-300 rounded-md">
+            <div class="flex p-4 flex-col md:flex-row items-center">
                 <!-- Imagen -->
                 <div class="w-full md:w-1/4 flex justify-center mb-4 md:mb-0">
                     <img src="{{$product -> image}}" alt="{{$product -> name}}" class="border rounded-md bg-white p-4">
                 </div>
 
                 <!-- Título y botón para ir a página del producto -->
-                <div class="w-full md:w-1/4">
+                <div class="md:w-1/4 text-center">
                     <div class="flex flex-col gap-3 p-3">
                         <p class="text-xl font-semibold">{{$product -> name}}</p>
                         <form action="{{ route("show.product", $product -> id) }}">
@@ -64,7 +65,7 @@
 
                 <!-- Tabla para desktop -->
                 <div class="hidden md:block w-full md:w-1/2 mt-4 md:mt-0">
-                    <table class="min-w-full mb-3 rounded-md">
+                    <table class="border border-gray-200 shadow-md mb-3 bg-yellow-100 rounded-md min-w-full">
                         <thead>
                             <tr>
                                 <th class="py-2 px-4 text-left">TIENDA</th>

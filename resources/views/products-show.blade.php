@@ -6,13 +6,13 @@
     <main class="bg-yellow-50 border border-gray-200 rounded-lg shadow-md m-6 flex flex-col items-center max-w-[1400px] mx-auto">
         <div class="flex flex-col md:grid md:grid-cols-3 pt-6">
             <div class="mx-auto">
-                <p class="py-2 px-4">
-                    <img src="{{ asset($product -> image) }}" alt="Sin foto" class="w-[300px] h-[300px]">
-                </p>
+                <div class="py-2 px-4">
+                    <img src="{{ asset($product -> image) }}" alt="Sin foto" class="w-[300px] h-[300px] border rounded-md bg-white p-4">
+                </div>
             </div>
-            <div class="col-span-2 text-center md:text-left">
+            <div class="col-span-2 text-center md:text-left mx-4">
                 <p class="text-4xl pb-4 text-center">{{ $product -> name }}</p>
-                <table class="min-w-full mb-3">
+                <table class="border border-gray-200 shadow-md bg-yellow-100 rounded-md min-w-full">
                     <thead>
                     <tr class="m-2">
                         <th class="py-2 px-4 text-left">DETALLES</th>
@@ -54,10 +54,10 @@
                 <div class="flex bg-yellow-100 border border-gray-300 rounded-md">
                     <div class="flex flex-col items-center justify-center p-4">
                         <!-- Imagen -->
-                        <div class="flex flex-col items-center gap-2 mb-4 md:mb-0">
-                            <img src="{{$shop -> image}}" class="w-3/4" alt="{{$shop -> name}}">
-                            <p class="text-xl font-bold">{{$shop -> name}}</p>
+                        <div class="flex flex-col items-center mb-4 bg-white w-[200px] h-[200px] justify-center border border-gray-300 rounded-md">
+                            <img src="{{ asset($shop -> image) }}" class="w-3/4" alt="{{$shop -> name}}">
                         </div>
+                        <p class="text-xl font-bold">{{$shop -> name}}</p>
 
                         <!-- Información del producto -->
                         <div class="md:w-1/2 flex flex-col items-center">
